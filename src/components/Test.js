@@ -7,6 +7,7 @@ export class Test extends React.Component {
             <div>
                 <p>username is: {this.props.name} </p>
                 <p>password is: {this.props.password} </p>
+                <p> There is some changes </p>
             </div>
         );
     }
