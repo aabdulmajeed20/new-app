@@ -9,7 +9,14 @@ import { Test } from "./components/Test";
     {name: "saad", pass: "112233"}
   ];
 class App extends Component {
-  state = {username: "", password:"", result: "Failed"}
+  constructor() {
+    super();
+    this.state = {username: "", password:"", result: "Failed", change: "Default"};
+  }
+
+  someChange(changed) {
+    this.setState({change: changed});
+  }
   
   submit(event){
     event.preventDefault();
@@ -19,14 +26,15 @@ class App extends Component {
       break;
      }
     else{
-      this.setState({result: "Failed"})
+      this.setState({result: "Failed"});
     }
     }
+    this.printResult();
   }
-  change(event) {
-    this.setState({username: event.target.value});
-    this.setState({password: event.target.value});
+  printResult(){
+    alert("Your login is " + this.state.result);
   }
+  
   render() {
     // array.map( item =>{ if(item.name === user) this.setState({})})
   
@@ -40,7 +48,7 @@ class App extends Component {
           <div className="row" style={style.div} >
             <div className="col-xs-4" ></div>
           <div className="col-xs-4" >
-            <lable for="usr">Username: </lable>
+            <lable for="usr"><h3>Username:</h3> </lable>
             <input type="text" className="form-control" id="usr" value={this.state.username} onChange={(event) => this.setState({username: event.target.value})} placeholder="Enter your name" />
           </div>
           </div>
@@ -48,18 +56,16 @@ class App extends Component {
           <div className="row" style={style.div} >
             <div className="col-xs-4" ></div>
           <div className="col-xs-4" >
-            <lable for="pwd">Password: </lable>
+            <lable for="pwd"><h3>Password: </h3></lable>
             <input type="password" className="form-control" id="pwd" value={this.state.password} onChange={(event) => this.setState({password: event.target.value})} placeholder="Enter your password" />
           </div>
           </div>
           <br/>
           <div> <input className="btn btn-primary" type="submit" value="Submit" /> </div>
         </form>
-        
-          <br/>
-          {this.state.result}
-          <br/>
-          <Test name={this.state.username} password={this.state.password}  />
+
+          <Test name={this.state.username} password={this.state.password} change={this.someChange.bind(this)} />
+          <p>There is testing on: {this.state.change}</p>
       
       </div>
     );
